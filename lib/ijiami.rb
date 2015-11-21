@@ -1,11 +1,12 @@
 require "ijiami/version"
 require 'ijiami/api'
 require 'thor'
+require 'pathname'
 
 module Ijiami
   class CLI < Thor
     desc 'assemble USERNAME', '上传－加密－下载'
-    def assemble(username)
+    def assemble(username, apk_path)
     end
 
     desc 'verify USERNAME', '获取用户信息'
@@ -15,7 +16,7 @@ module Ijiami
 
     desc 'upload USERNAME FILE_PATH', '上传 APK'
     def upload(username, file_path)
-      $stdout.puts Ijiami::Api.new(username).upload_local(file_path)
+      $stdout.puts Ijiami::Api.new(username).upload_local(File.expand_path(file_path))
     end
 
     desc 'encrypt USERNAME APP_ID', '加密'
