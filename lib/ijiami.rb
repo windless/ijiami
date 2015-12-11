@@ -32,9 +32,9 @@ module Ijiami
       result = Ijiami::Api.new(username).encrypt_result(app_id)
       $stdout.puts result
       while result["downloadUrl"] == nil
+        sleep 2
         result = Ijiami::Api.new(username).encrypt_result(app_id)
         $stdout.puts result
-        sleep 2
       end
     end
 
