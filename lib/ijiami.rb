@@ -31,7 +31,7 @@ module Ijiami
     def check(username, app_id)
       result = Ijiami::Api.new(username).encrypt_result(app_id)
       $stdout.puts result
-      while result["downloadUrl"] == nil
+      while result["downUrl"].to_s == ''
         sleep 2
         result = Ijiami::Api.new(username).encrypt_result(app_id)
         $stdout.puts result
