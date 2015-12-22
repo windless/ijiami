@@ -23,7 +23,7 @@ module Ijiami
         return
       end
 
-      puts "Download url: #{result["downUrl"]}"
+      puts result["downUrl"]
     end
 
     desc 'verify USERNAME', '获取用户信息'
@@ -60,6 +60,13 @@ module Ijiami
       end
 
       result
+    end
+
+    desc 'download URL', '下载 apk'
+    def download(url, local_path = nil)
+      if local_path
+        `wget #{url}`
+      end
     end
 
   end
