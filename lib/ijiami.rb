@@ -7,7 +7,7 @@ require 'pathname'
 module Ijiami
   class CLI < Thor
     desc 'assemble USERNAME APK_PATH', '上传－加密－下载'
-    def assemble(username, apk_path)
+    def assemble(username, apk_path, local_path = nil)
       result = upload(username, apk_path)
       unless result["code"] == 1100
         return
@@ -23,7 +23,9 @@ module Ijiami
         return
       end
 
-      puts result["downUrl"]
+      download_url =  result["downUrl"]
+      puts download_url
+      download(download_url, local_path)
     end
 
     desc 'verify USERNAME', '获取用户信息'
@@ -65,9 +67,15 @@ module Ijiami
     desc 'download URL', '下载 apk'
     def download(url, local_path = nil)
       if local_path
-        `wget #{url}`
+        path = File.expand_path(local_path)
+        if File.directory?(path)
+          puts `wget #{url} -P #{path}`
+        else
+          puts `wget #{url} -O #{path}`
+        end
+      else
+        puts `wget #{url}`
       end
     end
-
   end
 end
